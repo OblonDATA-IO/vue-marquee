@@ -1,15 +1,11 @@
 <script>
-let container;
-let isForceUpdate = false;
-let children = [];
-
 function cloneVNode (
     { children, tag, data, text, isComment, componentOptions, elm, context, ns, isStatic, key, },
     createElement
 ) {
     const clonedChildren = children && children
         .map(
-            vnode => cloneVNode(vnode, createElement)
+            vNode => cloneVNode(vNode, createElement)
         );
     const cloned = createElement(tag, data, clonedChildren);
     cloned.text = text;
@@ -24,9 +20,9 @@ function cloneVNode (
     return cloned;
 }
 
-function deepCloneVNodes (vnodes, createElement) {
-    return vnodes.map(
-        vnode => cloneVNode(vnode, createElement)
+function deepCloneVNodes (vNodes, createElement) {
+    return vNodes.map(
+        vNode => cloneVNode(vNode, createElement)
     );
 }
 
@@ -35,11 +31,11 @@ export default {
     "props": {
         "direction": {
             type: String,
-            default: "left"
+            default: "ltr"
         },
 
         "durationPerSlide": {
-            type: Number,
+            type: [String, Number],
             default: 2000
         },
     },
@@ -49,24 +45,26 @@ export default {
         };
     },
     "render" (createElement) {
-        console.log("render");
+        console.log("render")
 
-        children = [];
+        this.children = [];
 
         if (this.$slots.default) {
             for (let i = 0; i < this.multiplier; i++) {
-                children = children.concat(
+                this.children = this.children.concat(
                     deepCloneVNodes(
-                        this.$slots.default,
+                        this.$slots.default.filter(
+                            ({ tag }) => !!tag
+                        ),
                         createElement
                     ),
                 );
             }
         }
 
-        const animationDuration = parseInt(this.durationPerSlide) * (children.length > 0 ? children.length : 1);
+        const animationDuration = parseInt(this.durationPerSlide) * (this.children.length > 0 ? this.children.length : 1);
 
-        container = createElement(
+        this.container = createElement(
             "div",
             {
                 "staticClass": "marquee",
@@ -77,53 +75,66 @@ export default {
                     {
                         "staticClass": "marquee-content",
                         "class": {
-                            "marquee-rtl": this.direction === "right"
+                            "marquee-rtl": this.direction === "rtl",
+                            "marquee-ttb": this.direction === "ttb",
+                            "marquee-btt": this.direction === "btt",
                         },
                         "style": {
                             "animation-duration": `${ animationDuration }ms`,
                         },
                     },
-                    children
+                    this.children
                 )
             ]
         );
-        return container;
+        return this.container;
+    },
+    created () {
+        this.container = undefined;
+        this.children = [];
+        this.isForceUpdate = false;
     },
     mounted () {
-        const containerElement = container.elm;
-        const countChildren = children.length;
-        const sample = children.length > 0 ? children[0] : null;
+        console.log("mounted")
 
-        /*const childrenWidth = children.length > 0 ?
-            children.reduce(
-                (acc, child) => acc += child.elm.offsetWidth,
+        const measureProp = ["ltr", "rtl"].includes(this.direction) ? "offsetWidth" : "offsetHeight";
+        const containerElement = this.container.elm;
+        const childrenSize = this.children.length > 0 ?
+            this.children.reduce(
+                (acc, child) => acc += child.elm[measureProp] ? child.elm[measureProp] : 0,
                 0
             ) :
-            0;*/
+            0;
 
-        if (childrenWidth > 0) {
-            const countPerView = Math.ceil(containerElement.offsetWidth / sample.elm.offsetWidth);
-            this.multiplier = countChildren > countPerView ? 2 : Math.ceil(countPerView / countChildren) * 2;
-            console.log(this.multiplier);
-            isForceUpdate = true;
+        if (childrenSize > 0) {
+            const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
+            this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
+            console.log("multiplier", this.multiplier);
+            this.isForceUpdate = true;
             this.$forceUpdate();
         }
     },
     updated () {
-        if (isForceUpdate === false) {
-            const containerElement = container.elm;
-            const countChildren = children.length;
-            const sample = children.length > 0 ? children[0] : null;
+        console.log("updated")
 
-            if (sample) {
-                const countPerView = Math.ceil(containerElement.offsetWidth / sample.elm.offsetWidth);
-                this.multiplier = countChildren > countPerView ? 2 : Math.ceil(countPerView / countChildren) * 2;
-                console.log(this.multiplier);
-                isForceUpdate = true;
+        if (this.isForceUpdate === false) {
+            const measureProp = ["ltr", "rtl"].includes(this.direction) ? "offsetWidth" : "offsetHeight";
+            const containerElement = this.container.elm;
+            const childrenSize = this.children.length > 0 ?
+                this.children.reduce(
+                    (acc, child) => acc += child.elm[measureProp] ? child.elm[measureProp] : 0,
+                    0
+                ) :
+                0;
+
+            if (childrenSize > 0) {
+                const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
+                this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
+                this.isForceUpdate = true;
                 this.$forceUpdate();
             }
         } else {
-            isForceUpdate = false;
+            this.isForceUpdate = false;
         }
     },
 }
@@ -135,29 +146,50 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
 
-    width: 100%;
-
     .marquee-content {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
 
         width: fit-content;
-        height: 100%;
 
         transform: translate3d(0, 0, 0);
 
         animation-timing-function: linear;
         animation-iteration-count: infinite;
-        animation-name: marquee;
+        animation-name: marquee-ltr;
+
+        will-change: transform;
 
         &.marquee-rtl {
             animation-name: marquee-rtl;
         }
+
+        &.marquee-ttb {
+            height: fit-content;
+            flex-direction: column;
+            animation-name: marquee-ttb;
+        }
+
+        &.marquee-btt {
+            height: fit-content;
+            flex-direction: column;
+            animation-name: marquee-btt;
+        }
     }
 }
 
-@keyframes marquee {
+@keyframes marquee-ltr {
+    0%   {
+        transform: translate3d(-50%, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes marquee-rtl {
     0% {
         transform: translate3d(0, 0, 0);
     }
@@ -167,13 +199,23 @@ export default {
     }
 }
 
-@keyframes marquee-rtl {
+@keyframes marquee-ttb {
     0%   {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(0, -50%, 0);
     }
 
     100% {
         transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes marquee-btt {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, -50%, 0);
     }
 }
 </style>

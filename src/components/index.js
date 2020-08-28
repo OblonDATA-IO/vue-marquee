@@ -1,3 +1,3 @@
-import Marquee from "@/components/Marquee";
+import Marquee from "./Marquee";
 
 export default Marquee;

@@ -1,15 +1,17 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import marquee from "../src/components/index";
 
-Vue.config.productionTip = false;
-
-new Vue(
-    {
-        router,
-        store,
-        render: h => h(App)
+const ComponentLibrary = {
+    install (Vue, options = {}) {
+        Vue.component(marquee.name, marquee);
     }
-)
-    .$mount("#app"); 
+}
+
+export { default as marquee } from "../src/components/index";
+export default ComponentLibrary
+
+if (
+    typeof window !== "undefined" &&
+    window.Vue
+) {
+    window.Vue.use(ComponentLibrary);
+}
