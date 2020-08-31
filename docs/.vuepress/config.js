@@ -10,7 +10,7 @@ module.exports = {
         [ "meta", { name: "apple-mobile-web-app-capable", content: "yes" } ],
         [ "meta", { name: "apple-mobile-web-app-status-bar-style", content: "black" } ]
     ],
-    base: "/test/",
+    base: "/vue-marquee/",
     themeConfig: {
         repo: "",
         editLinks: false,

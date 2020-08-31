@@ -144,6 +144,7 @@ export default {
             const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
             this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
 
+            console.log("measureProp", measureProp);
             console.log("containerElement", containerElement[measureProp]);
             console.log("childrenSize", childrenSize);
             console.log("childrenPerView", childrenPerView);
@@ -170,6 +171,7 @@ export default {
                 const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
                 this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
 
+                console.log("measureProp", measureProp);
                 console.log("containerElement", containerElement[measureProp]);
                 console.log("childrenSize", childrenSize);
                 console.log("childrenPerView", childrenPerView);
