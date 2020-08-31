@@ -3,7 +3,11 @@
     "version": "0.1.0",
     "description": "A marquee component for Vue made with CSS transition and minimal JavaScript",
     "author": "UnKnoWn <thomas123456789000@gmail.com>",
+    "private": false,
+    "license": "MIT",
     "main": "dist/vue-marquee.umd.min.js",
+    "unpkg": "dist/vue-marquee.umd.min.js",
+    "module": "dist/vue-marquee.umd.min.js",
     "files": [
         "dist",
         "src"
@@ -13,6 +17,14 @@
         "vue",
         "css"
     ],
+    "bugs": {
+        "url": "https://github.com/OblonDATA-IO/vue-marquee/issues"
+    },
+    "homepage": "https://OblonDATA-IO.github.io/vue-marquee",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/OblonDATA-IO/vue-marquee.git"
+    },
     "scripts": {
         "build": "vue-cli-service build --target lib --name vue-marquee src/main.js",
         "serve:docs": "vuepress dev docs",
@@ -24,8 +36,6 @@
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.5.0",
-        "@vue/cli-plugin-router": "~4.5.0",
-        "@vue/cli-plugin-vuex": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
         "@vuepress/plugin-back-to-top": "^1.5.4",
         "@vuepress/plugin-medium-zoom": "^1.5.4",
