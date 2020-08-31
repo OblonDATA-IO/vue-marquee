@@ -15,20 +15,23 @@ function cloneVNode (
     cloned.context = context;
     cloned.ns = ns;
     cloned.isStatic = isStatic;
-    cloned.key = key;
-
+    cloned.key = undefined;
     return cloned;
-}
-
-function deepCloneVNodes (vNodes, createElement) {
-    return vNodes.map(
-        vNode => cloneVNode(vNode, createElement)
-    );
 }
 
 export default {
     "name": "Marquee",
     "props": {
+        "lazyStart": {
+            type: Boolean,
+            default: true,
+        },
+
+        "isPlaying": {
+            type: Boolean,
+            default: true,
+        },
+
         "direction": {
             type: String,
             default: "ltr"
@@ -41,23 +44,37 @@ export default {
     },
     data () {
         return {
+            isPlayingCopy: undefined,
             multiplier: 1,
         };
     },
+    computed: {
+        isPlayingInComponent: {
+            get () {
+                if (this.isPlayingCopy !== undefined) {
+                    return this.isPlayingCopy;
+                }
+                return this.isPlaying;
+            },
+            set (val) {
+                this.isPlayingCopy = val;
+                this.$emit("update:isPlaying", val);
+            },
+        },
+    },
     "render" (createElement) {
-        console.log("render")
-
         this.children = [];
 
         if (this.$slots.default) {
             for (let i = 0; i < this.multiplier; i++) {
                 this.children = this.children.concat(
-                    deepCloneVNodes(
-                        this.$slots.default.filter(
+                    this.$slots.default
+                        .filter(
                             ({ tag }) => !!tag
-                        ),
-                        createElement
-                    ),
+                        )
+                        .map(
+                            vNode => cloneVNode(vNode, createElement)
+                        )
                 );
             }
         }
@@ -75,6 +92,7 @@ export default {
                     {
                         "staticClass": "marquee-content",
                         "class": {
+                            "marquee-paused": this.isPlayingInComponent === false,
                             "marquee-rtl": this.direction === "rtl",
                             "marquee-ttb": this.direction === "ttb",
                             "marquee-btt": this.direction === "btt",
@@ -90,41 +108,56 @@ export default {
         return this.container;
     },
     created () {
+        // non-reactive properties
         this.container = undefined;
         this.children = [];
         this.isForceUpdate = false;
+
+        this.observer = new IntersectionObserver(
+            (entries) => {
+                this.isPlayingInComponent = entries[0].isIntersecting;
+            },
+            {
+                "rootMargin": "0px",
+                "threshold": 0
+            }
+        );
     },
     mounted () {
-        console.log("mounted")
-
         const measureProp = ["ltr", "rtl"].includes(this.direction) ? "offsetWidth" : "offsetHeight";
         const containerElement = this.container.elm;
+
+        if (this.lazyStart === true) {
+            this.observer.observe(containerElement);
+        }
+
         const childrenSize = this.children.length > 0 ?
-            this.children.reduce(
-                (acc, child) => acc += child.elm[measureProp] ? child.elm[measureProp] : 0,
-                0
-            ) :
+            this.children
+                .slice(0, this.children.length / this.multiplier)
+                .reduce(
+                    (acc, child) => acc += child.elm[measureProp] ? child.elm[measureProp] : 0,
+                    0
+                ) :
             0;
 
         if (childrenSize > 0) {
             const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
             this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
-            console.log("multiplier", this.multiplier);
             this.isForceUpdate = true;
             this.$forceUpdate();
         }
     },
     updated () {
-        console.log("updated")
-
         if (this.isForceUpdate === false) {
             const measureProp = ["ltr", "rtl"].includes(this.direction) ? "offsetWidth" : "offsetHeight";
             const containerElement = this.container.elm;
             const childrenSize = this.children.length > 0 ?
-                this.children.reduce(
-                    (acc, child) => acc += child.elm[measureProp] ? child.elm[measureProp] : 0,
-                    0
-                ) :
+                this.children
+                    .slice(0, this.children.length / this.multiplier)
+                    .reduce(
+                        (acc, child) => acc += child.elm[measureProp] ? child.elm[measureProp] : 0,
+                        0
+                    ) :
                 0;
 
             if (childrenSize > 0) {
@@ -160,6 +193,13 @@ export default {
         animation-name: marquee-ltr;
 
         will-change: transform;
+
+        -webkit-backface-visibility: hidden;
+        -webkit-transform-style: preserve-3d;
+
+        &.marquee-paused {
+            animation-play-state: paused;
+        }
 
         &.marquee-rtl {
             animation-name: marquee-rtl;

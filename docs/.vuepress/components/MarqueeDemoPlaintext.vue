@@ -21,8 +21,8 @@ export default {
 
 <style lang="scss">
 .marquee-demo-plaintext {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0;
+    margin: 10px 0;
 
     background-color: lightgrey;
 

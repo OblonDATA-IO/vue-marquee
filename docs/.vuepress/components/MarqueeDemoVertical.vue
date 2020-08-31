@@ -31,6 +31,9 @@ export default {
 .marquee-demo-vertical {
     height: 600px;
 
+    padding: 10px 0;
+    margin: 10px 0;
+
     .slide {
         height: 350px;
         padding: 5px;

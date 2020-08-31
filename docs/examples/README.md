@@ -4,11 +4,11 @@ sidebar: auto
 
 # Examples
 
-## Explanation
+## Mechanism
 
 Vue Marquee makes use of a visual illusion that achieves the scrolling effect. 
-The inner element moves along the x-axis (for horizontal marquee) or the y-axis 
-(for vertical marquee) only. 
+The inner element moves along the x-axis (for horizontal marquees) or the y-axis 
+(for vertical marquees) and get restarted once it reaches second half. 
 
 It involves no DOM manipulation. CSS transform composition layer is engaged 
 efficient GPU rendering. 
@@ -53,4 +53,12 @@ efficient GPU rendering.
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoVertical.vue
+:::
+
+## Asynchronous Images
+
+<marquee-demo-async></marquee-demo-async>
+
+::: details View Code
+<<< @/docs/.vuepress/components/MarqueeDemoAsync.vue
 :::

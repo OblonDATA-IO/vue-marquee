@@ -29,6 +29,9 @@ export default {
 
 <style lang="scss">
 .marquee-demo-images {
+    padding: 10px 0;
+    margin: 10px 0;
+
     .slide {
         width: 300px;
         height: 300px;

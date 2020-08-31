@@ -34,8 +34,8 @@ export default {
 
 <style lang="scss" scoped>
 .marquee-demo-plaintext-rtl {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0;
+    margin: 10px 0;
 
     background-color: lightgrey;
 
