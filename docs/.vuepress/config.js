@@ -12,7 +12,7 @@ module.exports = {
     ],
     base: "/vue-marquee/",
     themeConfig: {
-        repo: "",
+        repo: "OblonDATA-IO/vue-marquee",
         editLinks: false,
         docsDir: "",
         editLinkText: "",
