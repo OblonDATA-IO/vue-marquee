@@ -6,7 +6,7 @@ const ComponentLibrary = {
     }
 }
 
-export { default as marquee } from "../src/components/index";
+export { default as Marquee } from "../src/components/index";
 export default ComponentLibrary
 
 if (

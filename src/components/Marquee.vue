@@ -180,6 +180,8 @@ export default {
     box-sizing: border-box;
 
     .marquee-content {
+        height: 100%;
+
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;

@@ -1,6 +1,6 @@
 {
     "name": "@oblondata-io/vue-marquee",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A marquee component for Vue made with CSS transition and minimal JavaScript",
     "author": "UnKnoWn <thomas123456789000@gmail.com>",
     "private": false,
