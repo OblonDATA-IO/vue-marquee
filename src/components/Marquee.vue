@@ -114,7 +114,9 @@ export default {
         this.container = undefined;
         this.children = [];
         this.isForceUpdate = false;
-
+        this.observer = null;
+    },
+    beforeMount () {
         this.observer = new IntersectionObserver(
             (entries) => {
                 this.isPlayingInComponent = entries[0].isIntersecting;
