@@ -1,4 +1,6 @@
 <script>
+import "intersection-observer";
+
 function cloneVNode (
     { children, tag, data, text, isComment, componentOptions, elm, context, ns, isStatic, key, },
     createElement
@@ -144,6 +146,7 @@ export default {
             const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
             this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
 
+            console.log(this.direction)
             console.log("measureProp", measureProp);
             console.log("containerElement", containerElement[measureProp]);
             console.log("childrenSize", childrenSize);
@@ -171,6 +174,7 @@ export default {
                 const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
                 this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
 
+                console.log(this.direction)
                 console.log("measureProp", measureProp);
                 console.log("containerElement", containerElement[measureProp]);
                 console.log("childrenSize", childrenSize);
