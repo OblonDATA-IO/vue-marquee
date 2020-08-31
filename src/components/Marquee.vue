@@ -143,6 +143,12 @@ export default {
         if (childrenSize > 0) {
             const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
             this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
+
+            console.log("containerElement", containerElement[measureProp]);
+            console.log("childrenSize", childrenSize);
+            console.log("childrenPerView", childrenPerView);
+            console.log("multiplier", this.multiplier);
+
             this.isForceUpdate = true;
             this.$forceUpdate();
         }
@@ -163,6 +169,12 @@ export default {
             if (childrenSize > 0) {
                 const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
                 this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
+
+                console.log("containerElement", containerElement[measureProp]);
+                console.log("childrenSize", childrenSize);
+                console.log("childrenPerView", childrenPerView);
+                console.log("multiplier", this.multiplier);
+
                 this.isForceUpdate = true;
                 this.$forceUpdate();
             }
