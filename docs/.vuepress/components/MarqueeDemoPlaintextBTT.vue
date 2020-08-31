@@ -1,20 +1,37 @@
 <template>
-    <marquee class="marquee-demo-plaintext-btt"
-             duration-per-slide="450"
-             direction="btt">
-        <div>安</div>
-        <div>心</div>
-        <div>と</div>
-        <div>信</div>
-        <div>頼</div>
-        <div>の</div>
-        <div>日</div>
-        <div>〇</div>
-        <div>グ</div>
-        <div>ル</div>
-        <div style="transform: rotate(90deg)">ー</div>
-        <div style="margin-bottom: 132px">プ</div>
-    </marquee>
+    <div class="marquee-demo-plaintext-btt">
+        <marquee duration-per-slide="450"
+                 direction="btt">
+            <div>社</div>
+            <div>会</div>
+            <div>イ</div>
+            <div>ノ</div>
+            <div>ベ</div>
+            <div style="transform: rotate(90deg)">ー</div>
+            <div>シ</div>
+            <div>ョ</div>
+            <div>ン</div>
+            <div>の</div>
+            <div>日</div>
+            <div>〇</div>
+        </marquee>
+        <marquee duration-per-slide="450"
+                 direction="btt">
+            <div>安</div>
+            <div>心</div>
+            <div>と</div>
+            <div>信</div>
+            <div>頼</div>
+            <div>の</div>
+            <div>日</div>
+            <div>〇</div>
+            <div>グ</div>
+            <div>ル</div>
+            <div style="transform: rotate(90deg)">ー</div>
+            <div style="margin-bottom: 132px">プ</div>
+        </marquee>
+    </div>
+
 </template>
 
 <script>

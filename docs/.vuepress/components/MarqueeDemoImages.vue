@@ -1,4 +1,7 @@
 <template>
+    <client-only>
+
+    </client-only>
     <marquee class="marquee-demo-images"
              duration-per-slide="1000"
              direction="ltr">

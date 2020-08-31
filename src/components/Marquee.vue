@@ -126,7 +126,7 @@ export default {
         );
     },
     mounted () {
-        const measureProp = ["ltr", "rtl"].includes(this.direction) ? "offsetWidth" : "offsetHeight";
+        const measureProp = ["ttb", "btt"].includes(this.direction) ? "offsetHeight" : "offsetWidth";
         const containerElement = this.container.elm;
 
         if (this.lazyStart === true) {
@@ -145,14 +145,6 @@ export default {
         if (childrenSize > 0) {
             const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
             this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
-
-            console.log(this.direction)
-            console.log("measureProp", measureProp);
-            console.log("containerElement", containerElement[measureProp]);
-            console.log("childrenSize", childrenSize);
-            console.log("childrenPerView", childrenPerView);
-            console.log("multiplier", this.multiplier);
-
             this.isForceUpdate = true;
             this.$forceUpdate();
         }
@@ -173,14 +165,6 @@ export default {
             if (childrenSize > 0) {
                 const childrenPerView = Math.ceil(containerElement[measureProp] / childrenSize);
                 this.multiplier = childrenPerView < 1 ? 2 : childrenPerView * 2;
-
-                console.log(this.direction)
-                console.log("measureProp", measureProp);
-                console.log("containerElement", containerElement[measureProp]);
-                console.log("childrenSize", childrenSize);
-                console.log("childrenPerView", childrenPerView);
-                console.log("multiplier", this.multiplier);
-
                 this.isForceUpdate = true;
                 this.$forceUpdate();
             }

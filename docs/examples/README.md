@@ -13,11 +13,15 @@ The inner element moves along the x-axis (for horizontal marquees) or the y-axis
 It involves no DOM manipulation. CSS transform composition layer is engaged 
 efficient GPU rendering. 
 
-<marquee-explanation></marquee-explanation>
+<client-only>
+    <marquee-explanation></marquee-explanation>
+</client-only>
 
 ## Plaintext left-to-right
 
-<marquee-demo-plaintext></marquee-demo-plaintext>
+<client-only>
+    <marquee-demo-plaintext></marquee-demo-plaintext>
+</client-only>
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoPlaintext.vue
@@ -25,7 +29,9 @@ efficient GPU rendering.
 
 ## Plaintext right-to-left
 
-<marquee-demo-plaintext-r-t-l></marquee-demo-plaintext-r-t-l>
+<client-only>
+    <marquee-demo-plaintext-r-t-l></marquee-demo-plaintext-r-t-l>
+</client-only>
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoPlaintextRTL.vue
@@ -33,7 +39,9 @@ efficient GPU rendering.
 
 ## Plaintext bottom-to-top
 
-<marquee-demo-plaintext-b-t-t></marquee-demo-plaintext-b-t-t>
+<client-only>
+    <marquee-demo-plaintext-b-t-t></marquee-demo-plaintext-b-t-t>
+</client-only>
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoPlaintextBTT.vue
@@ -41,7 +49,9 @@ efficient GPU rendering.
 
 ## Images left-to-right
 
-<marquee-demo-images></marquee-demo-images>
+<client-only>
+    <marquee-demo-images></marquee-demo-images>
+</client-only>
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoImages.vue
@@ -49,7 +59,9 @@ efficient GPU rendering.
 
 ## Images top-to-bottom
 
-<marquee-demo-vertical></marquee-demo-vertical>
+<client-only>
+    <marquee-demo-vertical></marquee-demo-vertical>
+</client-only>
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoVertical.vue
@@ -57,7 +69,9 @@ efficient GPU rendering.
 
 ## Asynchronous Images
 
-<marquee-demo-async></marquee-demo-async>
+<client-only>
+    <marquee-demo-async></marquee-demo-async>
+</client-only>
 
 ::: details View Code
 <<< @/docs/.vuepress/components/MarqueeDemoAsync.vue

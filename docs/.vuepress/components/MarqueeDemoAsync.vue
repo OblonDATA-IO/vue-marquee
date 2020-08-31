@@ -1,14 +1,16 @@
 <template>
-    <marquee class="marquee-demo-async"
-             duration-per-slide="1000"
-             direction="rtl">
-        <div class="slide"
-             v-for="{ id, author, } in asyncData"
-             v-bind:key="id">
-            <img v-bind:alt="author"
-                 v-bind:src="`https://picsum.photos/id/${ id }/400/300`">
-        </div>
-    </marquee>
+    <client-only>
+        <marquee class="marquee-demo-async"
+                 duration-per-slide="1000"
+                 direction="rtl">
+            <div class="slide"
+                 v-for="{ id, author, } in asyncData"
+                 v-bind:key="id">
+                <img v-bind:alt="author"
+                     v-bind:src="`https://picsum.photos/id/${ id }/400/300`">
+            </div>
+        </marquee>
+    </client-only>
 </template>
 
 <script>
